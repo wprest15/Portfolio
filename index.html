@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Walton Prest | Software Engineer</title>
+  <meta name="description" content="Walton Prest is a full-stack software engineer in Knoxville, TN working in C#, ASP.NET MVC and SQL.">
+  <meta property="og:title" content="Walton Prest | Software Engineer">
+  <meta property="og:description" content="Portfolio of Walton Prest, a full-stack software engineer in Knoxville, TN. Boot it up and insert a disk.">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' shape-rendering='crispEdges'%3E%3Cpath fill='%23f2542d' d='M1 1h12l2 2v12H1z'/%3E%3Cpath fill='%23dfe3e8' d='M4 1h7v5H4z'/%3E%3Cpath fill='%2314110d' d='M8 2h2v3H8z'/%3E%3Cpath fill='%23fbf7ea' d='M3 9h10v6H3z'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,700;1,400&family=Pixelify+Sans:wght@500;700&family=Silkscreen:wght@400;700&family=VT323&display=swap" rel="stylesheet">
+  <script>
+    /* Runs before first paint so the room, phosphor and boot screen never flash. */
+    (function () {
+      var d = document.documentElement, s = {}, booted = false;
+      try { s = JSON.parse(localStorage.getItem('waltonos') || '{}'); } catch (e) {}
+      try { booted = sessionStorage.getItem('waltonos-booted') === '1'; } catch (e) {}
+      var dark = s.room ? s.room === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+      d.dataset.room = dark ? 'dark' : 'light';
+      d.dataset.phosphor = s.phosphor || 'green';
+      if (s.crt) d.classList.add('crt-on');
+      if (!booted && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        d.classList.add('booting');
+        setTimeout(function () { d.classList.remove('booting'); }, 9000);
+      }
+    })();
+  </script>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <a class="skip" href="#projects">Skip to projects</a>
+
+  <div id="boot" aria-hidden="true">
+    <pre id="bootText"></pre>
+    <p class="boot__skip">Press any key to skip</p>
+  </div>
+
+  <header class="menubar">
+    <nav class="menubar__nav" aria-label="Site">
+      <div class="menu" data-menu>
+        <button class="menu__btn menu__btn--logo" type="button" aria-haspopup="menu" aria-expanded="false" aria-label="System menu">
+          <span class="stripes" aria-hidden="true"></span>
+        </button>
+        <div class="menu__drop" role="menu" hidden>
+          <button role="menuitem" type="button" data-act="about">About this computer…</button>
+          <hr>
+          <button role="menuitem" type="button" data-act="reboot">Restart…</button>
+          <button role="menuitem" type="button" data-act="power">Shut down…</button>
+        </div>
+      </div>
+
+      <div class="menu menu--go" data-menu>
+        <button class="menu__btn" type="button" aria-haspopup="menu" aria-expanded="false">Go</button>
+        <div class="menu__drop" role="menu" hidden>
+          <a role="menuitem" href="#intro">Intro</a>
+          <a role="menuitem" href="#projects">Projects</a>
+          <a role="menuitem" href="#experience">Experience</a>
+          <a role="menuitem" href="#skills">Skills</a>
+          <a role="menuitem" href="#contact">Contact</a>
+        </div>
+      </div>
+
+      <a class="menu__link" href="#intro">Intro</a>
+      <a class="menu__link" href="#projects">Projects</a>
+      <a class="menu__link" href="#experience">Experience</a>
+      <a class="menu__link" href="#skills">Skills</a>
+      <a class="menu__link" href="#contact">Contact</a>
+
+      <div class="menu" data-menu>
+        <button class="menu__btn" type="button" aria-haspopup="menu" aria-expanded="false">Display</button>
+        <div class="menu__drop" role="menu" hidden>
+          <button role="menuitemradio" type="button" data-act="phosphor" data-arg="green" aria-checked="false">Green phosphor</button>
+          <button role="menuitemradio" type="button" data-act="phosphor" data-arg="amber" aria-checked="false">Amber phosphor</button>
+          <button role="menuitemradio" type="button" data-act="phosphor" data-arg="ice" aria-checked="false">Ice phosphor</button>
+          <button role="menuitemradio" type="button" data-act="phosphor" data-arg="pink" aria-checked="false">Hot pink phosphor</button>
+          <hr>
+          <button role="menuitemcheckbox" type="button" data-act="crt" aria-checked="false">Scanlines everywhere</button>
+          <button role="menuitemcheckbox" type="button" data-act="lights" aria-checked="false">Lights off</button>
+        </div>
+      </div>
+
+      <div class="menu" data-menu>
+        <button class="menu__btn" type="button" aria-haspopup="menu" aria-expanded="false">Special</button>
+        <div class="menu__drop" role="menu" hidden>
+          <button role="menuitemcheckbox" type="button" data-act="turbo" aria-checked="false">Turbo</button>
+          <button role="menuitemcheckbox" type="button" data-act="sound" aria-checked="false">PC speaker</button>
+          <hr>
+          <button role="menuitem" type="button" data-act="snake">Play Snake</button>
+          <button role="menuitem" type="button" data-act="saver">Start screensaver</button>
+          <button role="menuitem" type="button" data-act="crash">Crash the computer</button>
+        </div>
+      </div>
+    </nav>
+
+    <div class="menubar__right">
+      <span class="menubar__path" id="sysPath">C:\WALTON</span>
+      <span class="load" title="How far down the page you are">
+        <span class="load__label">LOAD</span>
+        <span class="load__bar"><i id="loadBar"></i></span>
+        <span class="load__pct" id="loadPct">0%</span>
+      </span>
+      <time class="menubar__clock" id="clock"></time>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- ====================================================== INTRO -->
+    <section id="intro" class="desk" data-path="C:\WALTON">
+      <div class="desk__left">
+        <div class="crt">
+          <div class="crt__screen" id="crtScreen">
+            <canvas id="nameCanvas" aria-hidden="true"></canvas>
+            <h1 class="sr">Walton Prest, Software Engineer</h1>
+            <div class="crt__status" aria-hidden="true">
+              <span>WALTON-OS 26.05</span>
+              <span class="crt__hint">push the pixels around</span>
+            </div>
+            <p class="crt__prompt" aria-hidden="true">&gt; <span id="tagline"></span><i class="caret"></i></p>
+          </div>
+          <div class="sticky" aria-hidden="true">do <b>NOT</b><br>press turbo</div>
+          <div class="crt__chin">
+            <span class="crt__badge"><span class="stripes" aria-hidden="true"></span>PREST 2026</span>
+            <div class="crt__controls">
+              <button class="turbo" id="turboBtn" type="button" aria-pressed="false">
+                <span class="turbo__seg" aria-hidden="true" id="turboSeg">33</span>
+                <span class="turbo__cap">TURBO</span>
+              </button>
+              <button class="knob" id="knob" type="button" aria-label="Change the phosphor color" title="Change the phosphor color"><i></i></button>
+              <span class="led" aria-hidden="true"></span>
+            </div>
+          </div>
+        </div>
+        <div class="crt__stand" aria-hidden="true"></div>
+
+        <nav class="disks" id="disks" aria-label="Jump to a section">
+          <p class="disks__hint">Insert a disk <br>to load a program <span aria-hidden="true">&rarr;</span></p>
+        </nav>
+      </div>
+
+      <div class="desk__right">
+        <article class="win win--drag" id="readmeWin">
+          <header class="win__bar">
+            <button class="win__btn" type="button" data-shade aria-label="Collapse README window"></button>
+            <span class="win__title">README.TXT</span>
+          </header>
+          <div class="win__body readme">
+            <h2 class="readme__hi">Hi, I'm Walton.</h2>
+            <p>I'm a software engineer in Knoxville, Tennessee, building full-stack web applications with C#, ASP.NET MVC and SQL.</p>
+            <p>I graduated from the University of Tennessee in May 2026 with a BS in Computer Science and minors in Cybersecurity and Business Administration. Along the way I helped take a wildfire mitigation web app from WordPress to a complete in-house application, and built a storefront and admin dashboard for a Knoxville business.</p>
+            <div class="readme__cta">
+              <a class="btn btn--primary" href="#projects">&#9654; Load projects</a>
+              <a class="btn" id="heroMail" href="mailto:wprest@icloud.com">Email me</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="win win--drag win--term" id="termWin">
+          <header class="win__bar">
+            <button class="win__btn" type="button" data-shade aria-label="Collapse terminal window"></button>
+            <span class="win__title">TERMINAL</span>
+          </header>
+          <div class="win__body term" id="term">
+            <div class="term__out" id="termOut" aria-live="polite"></div>
+            <form class="term__form" id="termForm" autocomplete="off">
+              <label class="term__ps" for="termInput">walton:~$</label>
+              <input class="term__input" id="termInput" type="text" spellcheck="false" autocapitalize="off" autocorrect="off" enterkeyhint="go" placeholder="type help">
+            </form>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <div class="ticker" aria-hidden="true">
+      <div class="ticker__track" id="ticker"></div>
+    </div>
+
+    <!-- ====================================================== PROJECTS -->
+    <section id="projects" class="wall" data-path="C:\WALTON\PROJECTS">
+      <div class="wrap">
+        <header class="sec-head">
+          <p class="sec-head__cmd">C:\WALTON\PROJECTS&gt; <span>dir</span></p>
+          <h2 class="sec-head__title">Projects</h2>
+          <div class="dir" id="dirList"></div>
+        </header>
+        <noscript>
+          <p class="noscript">This site is a little computer and it needs JavaScript to boot. In the meantime, say hello at wprest@icloud.com.</p>
+        </noscript>
+        <div id="projectList"></div>
+      </div>
+    </section>
+
+    <!-- ====================================================== EXPERIENCE -->
+    <section id="experience" class="printroom" data-path="C:\WALTON\EXPERIENCE">
+      <div class="wrap">
+        <header class="sec-head sec-head--ink">
+          <p class="sec-head__cmd">walton:~$ <span>git log --graph --all</span></p>
+          <h2 class="sec-head__title">Experience</h2>
+        </header>
+
+        <div class="printer">
+          <div class="printer__body">
+            <span class="printer__name">WP-2026 DOT MATRIX</span>
+            <span class="printer__lights"><i class="led"></i>ONLINE</span>
+          </div>
+          <div class="printer__slot"></div>
+        </div>
+        <div class="paper" id="paper">
+          <div class="paper__inner">
+            <div class="graph" id="graph"></div>
+            <p class="graph__hint" aria-hidden="true">&larr; swipe the graph to go back in time</p>
+            <div id="logList"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================== SKILLS -->
+    <section id="skills" class="pcb" data-path="C:\WALTON\SKILLS">
+      <div class="wrap">
+        <header class="sec-head sec-head--pcb">
+          <p class="sec-head__cmd">walton:~$ <span>grep -r "skills" ./walton</span></p>
+          <h2 class="sec-head__title">Skills</h2>
+        </header>
+        <div class="board" id="board">
+          <svg class="board__traces" id="traces" aria-hidden="true"></svg>
+          <div class="board__col" id="boardLeft"></div>
+          <div class="cpu">
+            <div class="cpu__label" aria-hidden="true"><span>WP-2026</span><span>REV A</span></div>
+            <div class="cpu__screen" id="readout" aria-live="polite"></div>
+            <div class="cpu__label cpu__label--b" aria-hidden="true"><span>KNOXVILLE, TN</span></div>
+          </div>
+          <div class="board__col" id="boardRight"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================== CONTACT -->
+    <section id="contact" class="shutdown" data-path="C:\WALTON\CONTACT">
+      <h2 class="shutdown__title">It's now safe to email Walton.</h2>
+      <a class="shutdown__mail" id="contactMail" href="mailto:wprest@icloud.com">wprest@icloud.com</a>
+      <div class="shutdown__row" id="contactRow">
+        <button class="btn btn--dark" type="button" id="copyMail">Copy address</button>
+      </div>
+      <p class="shutdown__place">Knoxville, TN</p>
+      <button class="power" type="button" data-act="power" aria-label="Shut down the site">
+        <span aria-hidden="true"></span>
+      </button>
+      <p class="shutdown__foot">Built with plain HTML, CSS and JavaScript. No frameworks, no build step.</p>
+    </section>
+  </main>
+
+  <!-- ====================================================== OVERLAYS -->
+  <div id="crtOverlay" aria-hidden="true"></div>
+  <div id="toasts" role="status" aria-live="polite"></div>
+
+  <div id="bsod" hidden>
+    <div class="bsod__inner">
+      <p class="bsod__head"><span>WaltonOS</span></p>
+      <p>A fatal exception 0xC0FFEE has occurred at 0028:C0DE in module CURIOSITY.EXE. You asked for this, and honestly that's on you.</p>
+      <p>*&nbsp; Press any key to restart the computer.<br>*&nbsp; Your unsaved work was already gone. Nothing was saved. This is a website.</p>
+      <p class="bsod__prompt">Press any key to continue <i class="caret"></i></p>
+    </div>
+  </div>
+
+  <div id="saver" hidden>
+    <div id="saverLogo" class="saver__logo" aria-hidden="true">WP</div>
+    <p id="saverCount" class="saver__count"></p>
+  </div>
+
+  <div id="powerOff" hidden>
+    <p>Press any key to power on</p>
+  </div>
+
+  <dialog class="dlg win" id="aboutDlg" aria-labelledby="aboutTitle">
+    <header class="win__bar">
+      <form method="dialog"><button class="win__btn" aria-label="Close"></button></form>
+      <span class="win__title" id="aboutTitle">ABOUT THIS COMPUTER</span>
+    </header>
+    <div class="win__body about">
+      <div class="about__logo" aria-hidden="true"><span class="stripes"></span></div>
+      <h3>WaltonOS 26.05</h3>
+      <dl id="aboutList"></dl>
+    </div>
+  </dialog>
+
+  <dialog class="lightbox" id="lightbox" aria-label="Screenshot">
+    <form method="dialog"><button class="btn btn--dark lightbox__close">Close</button></form>
+    <img id="lightboxImg" alt="">
+  </dialog>
+
+  <script src="js/content.js"></script>
+  <script src="js/fx.js"></script>
+  <script src="js/render.js"></script>
+  <script src="js/terminal.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
